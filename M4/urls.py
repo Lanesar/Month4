@@ -22,5 +22,15 @@ urlpatterns = [
     path('hello/', views.index),
     path('', views.main),
     path('dt/', views.dt),
-    path('info/', views.info)
+    path('info/', views.info),
+    path('products/', views.product_list_view),
+    path('products/<int:id>/', views.product_detail_view),
+    path('category/<int:category_id>/products/', views.category_product_filter_view),
+    path('movies/', views.movies),
+    path('movies/<int:id>/', views.movies_view),
+    path('directors/', views.directors),
+    path('directors/<int:id>/', views.director_view),
+    path('reviews/', views.reviews),
+    path('reviews/<int:id>/', views.reviews_view)
+
 ]

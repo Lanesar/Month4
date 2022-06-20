@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/products/">
+    <button>Go Back</button>
+</a>
+<h2>Title: {{ Product_detail.name }}</h2>
+<p>Price: {{ Product_detail.price }}</p>
+<p>Description: {{ Product_detail.description }}</p>
+<p>Created Date: {{ Product_detail.created_at }}</p>
+<hr/>
+<h3>All reviews</h3>
+{% for review in Product_detail.reviews.all %}
+    <p>{{ review.text }}</p>
+    <p>{{ review.author }}</p>
+{% endfor %}
+</body>
+</html>
