@@ -13,6 +13,7 @@ class Director(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(blank=True)
+    director = models.ForeignKey(Director, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -20,6 +21,7 @@ class Movie(models.Model):
 
 class Movie_Rev(models.Model):
     text = models.TextField()
+    Movie = models.ForeignKey(Movie, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.text

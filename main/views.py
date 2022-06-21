@@ -55,8 +55,11 @@ def movies(request):
 
 
 def movies_view(request, id):
-    movie = Movie.objects.get(id=id)
-    return render(request, 'detail_movies.html', context={'movies': movie})
+    movie_list = {
+        'Movie': Movie.objects.filter(id=id),
+        'Reviews': Movie_Rev.objects.filter(Movie_id=id)
+    }
+    return render(request, 'detail_movies.html', context=movie_list)
 
 
 def directors(request):
