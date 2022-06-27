@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
 <h1>The date for today is: {% now "jS F Y H:i" %}</h1>
 <h2>Every day is a wonderful day. Or so they'd like you to believe. You see, I am a day hater. Every one of them is
 dreadfully long, painstakingly tedious, and each serves as a reminder that, tomorrow, there is another.</h2>
@@ -17,6 +12,4 @@ form one.</h6>
 <h7>This, for some reason, is bigger. Focus on this text. This is a comfort from what horrors await you above.
     But it's not really a wait if you never look at it, right?</h7>
 <p>I've ran out of headers.</p>
-
-</body>
-</html>
+{% endblock %}

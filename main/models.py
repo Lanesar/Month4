@@ -14,6 +14,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     director = models.ForeignKey(Director, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to='movies', null=True)
 
     def __str__(self):
         return self.title
@@ -51,6 +52,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)  # True or False
     created_at = models.DateTimeField(auto_now_add=True)  # 2022-06-06
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='products', null=True)
 
     def __str__(self):
         return self.name

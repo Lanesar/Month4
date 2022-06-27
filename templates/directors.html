@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
 <h1>Directors:</h1>
 {% for dir in directors %}
 <a href="/directors/{{ dir.id }}/"> Name: {{ dir.name }} </a>
 <hr/>
 {% endfor %}
-
-</body>
-</html>
+{% endblock %}

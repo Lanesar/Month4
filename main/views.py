@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from main.models import Product, Category, Movie, Movie_Rev, Director
 
-
 # Create your views here.
 
 
@@ -38,7 +37,8 @@ def info(a):
 
 def product_detail_view(request, id):
     product = Product.objects.get(id=id)
-    return render(request, 'detail.html', context={'Product_detail': product})
+    return render(request, 'detail.html', context={'Product_detail': product,
+                                                   'Category_list': Category.objects.all()})
 
 
 def category_product_filter_view(request, category_id):
@@ -80,6 +80,8 @@ def reviews(request):
 def reviews_view(request, id):
     review = Movie_Rev.objects.get(id=id)
     return render(request, 'review_view.html', context={'review': review})
+
+
 
 
 
