@@ -33,8 +33,12 @@ urlpatterns = [
     path('directors/', views.directors),
     path('directors/<int:id>/', views.director_view),
     path('reviews/', views.reviews),
-    path('reviews/<int:id>/', views.reviews_view)
-
+    path('reviews/<int:id>/', views.reviews_view),
+    path('add_product/', views.add_product_view),
+    path('register/', views.register_view),
+    path('login/', views.login_view),
+    path('add_director/', views.director_reg),
+    path('add_movie/', views.movie_reg)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

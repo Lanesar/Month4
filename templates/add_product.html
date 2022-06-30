@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="form-content">
+<h3 >Create a product</h3>
+<form action="/add_product/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-dark" value="Send">
+</form>
+</div>
+{% endblock %}
