@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from main.models import Product, Director, Movie
 from django.contrib.auth.models import User
+import re
 
 
 class ProductForm(forms.ModelForm):
@@ -74,6 +75,9 @@ class RegisterForm(forms.Form):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control'
     }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control'
+    }))
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -89,11 +93,21 @@ class RegisterForm(forms.Form):
             raise ValidationError('Passwords do not match')
         return password
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        emails = User.objects.filter(email=email)
+        if emails:
+            raise ValidationError('An account with that email already exists!')
+        elif re.search(r"[a-zA-Z0-9]+@(gmail|mail|yandex)\.(com|ru)", email) is None:
+            raise ValidationError('Invalid email address!')
+        return email
+
     def save(self):
         """ Create User """
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
-        user = User.objects.create_user(username=username, password=password)
+        email = self.cleaned_data['email']
+        user = User.objects.create_user(username=username, password=password, email=email)
         return user
 
 

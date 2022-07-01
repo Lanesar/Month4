@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from main.models import Product, Category, Movie, Movie_Rev, Director
 from main.forms import ProductForm, RegisterForm, LoginForm, DirectorForm, MovieForm
 from django.contrib.auth import authenticate, login, logout
-
 # Create your views here.
 
 
@@ -128,7 +127,7 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/register/')
+            return redirect('/login/')
     return render(request, 'register.html', context={
         'form': form
     })
