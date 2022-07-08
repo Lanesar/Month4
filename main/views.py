@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from main.models import Product, Category, Movie, Movie_Rev, Director
+from main.models import Product, Category, Movie, Movie_Rev, Director, Review
 from main.forms import ProductForm, RegisterForm, LoginForm, DirectorForm, MovieForm
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import ListView, DetailView, FormView
+from django.views import View
 # Create your views here.
 
 
@@ -14,6 +16,19 @@ def index(request):
     return render(request, 'index.html', context=dict_)
 
 
+class IndexView(View):
+    def get(self, request):
+        dict_ = {
+            'key': 'Hello World',
+            'color': 'yellow',
+            'list_': ['Abylai', "Salima", "Sanjar", 'Janat']
+        }
+        return render(request, 'index.html', context=dict_)
+
+    def post(self, request):
+        pass
+
+
 def product_list_view(request):
     #    products = Product.objects.all()   QuerySet
     context = {
@@ -22,6 +37,19 @@ def product_list_view(request):
     }
 
     return render(request, 'products.html', context=context)
+
+
+class ContextData:
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['Category_list'] = Category.objects.all()
+        return context
+
+
+class ProductListView(ContextData, ListView):
+    queryset = Product.objects.all()
+    template_name = 'products.html'
+    context_object_name = 'Product_list'
 
 
 def main(req):
@@ -42,12 +70,32 @@ def product_detail_view(request, id):
                                                    'Category_list': Category.objects.all()})
 
 
+class ProductDetailView(ContextData, DetailView):
+    model = Product
+    template_name = 'detail.html'
+    context_object_name = 'Product_detail'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['reviews'] = Review.objects.filter(product=self.object)
+        return context
+
+
 def category_product_filter_view(request, category_id):
     context = {
         'Product_list': Product.objects.filter(category_id=category_id),
         'Category_list': Category.objects.all()
     }
     return render(request, 'products.html', context=context)
+
+
+class CategoryProductFilterView(ContextData, ListView):
+    queryset = Product.objects.all()
+    template_name = 'products.html'
+    context_object_name = 'Product_list'
+
+    def get_queryset(self):
+        return Product.objects.filter(category_id=self.request.resolver_match.kwargs['category_id'])
 
 
 def movies(request):
@@ -81,6 +129,16 @@ def reviews(request):
 def reviews_view(request, id):
     review = Movie_Rev.objects.get(id=id)
     return render(request, 'review_view.html', context={'review': review})
+
+
+class AddProductFormView(ContextData, FormView):
+    form_class = ProductForm
+    template_name = 'add_product.html'
+    success_url = '/products/'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 def add_product_view(request):
@@ -149,4 +207,8 @@ def login_view(request):
     })
 
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('/login/')
 
